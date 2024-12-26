@@ -2,20 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+::-moz-selection {
+    /* Code for Firefox */
+    color: var(--background);
+    background: var(--select);
+}
+
+::selection {
+    color: var(--background);
+    background: var(--select);
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+    :root {
+        --background: #0a0a0a;
+        --select: #ededed;
+        --foreground: #22c55e; /* tw-green-500 */
+    }
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+    color: var(--foreground);
+    background: var(--background);
 }
