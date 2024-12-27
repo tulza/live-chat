@@ -1,0 +1,22 @@
+# fly.toml app configuration file generated for live-chat-billowing-rain-2283 on 2024-12-27T07:20:07+13:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'live-chat-billowing-rain-2283'
+primary_region = 'syd'
+
+[build]
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1
