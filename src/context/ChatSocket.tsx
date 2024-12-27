@@ -18,7 +18,7 @@ export type Message = {
     message: string;
 };
 
-const ChatContext = createContext<ChatContextType>({});
+const ChatContext = createContext<ChatContextType>({} as ChatContextType);
 
 export const useChatSocket = () => {
     const context = useContext(ChatContext);

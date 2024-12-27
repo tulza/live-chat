@@ -17,11 +17,11 @@
     :root {
         --background: #0a0a0a;
         --select: #ededed;
-        --foreground: #22c55e; /* tw-green-500 */
+        --primary: 142 71% 45%; /* tw-green-500 */
     }
 }
 
 body {
-    color: var(--foreground);
+    color: var(--primary);
     background: var(--background);
 }
