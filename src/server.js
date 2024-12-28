@@ -6,6 +6,8 @@ const dev = process.env.NODE_ENV !== "production";
 const hostname = "localhost";
 const port = 3000;
 
+let onlineUsers = 0;
+
 // when using middleware `hostname` and `port` must be provided below
 
 const app = next({ dev, hostname, port });
@@ -18,8 +20,13 @@ app.prepare().then(() => {
 
     io.on("connection", (socket) => {
         console.log("a user has connected");
+        onlineUsers += 1;
+        console.log(onlineUsers);
+
+        io.emit("numberOfUsers", onlineUsers);
 
         socket.on("disconnect", () => {
+            onlineUsers -= 1;
             console.log("a user has disconnected");
         });
 
