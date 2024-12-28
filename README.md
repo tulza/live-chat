@@ -2,7 +2,7 @@
 
 A minimal chat app with a console aesthetics.
 
-NODE_VERSION: 20.18.1
+`NODE_VERSION: 20.18.1`
 
 running the application:
 
