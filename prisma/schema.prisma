@@ -6,6 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-1.1.x", "debian-openssl-3.0.x"]
 }
 
 datasource db {
@@ -15,6 +16,10 @@ datasource db {
 
 model User {
   id       Int       @id @default(autoincrement())
+  githubId Int?   @unique 
+  googleId Int?   @unique
+  username String
+  createdAt DateTime @default(now())
   sessions Session[]
 }
 

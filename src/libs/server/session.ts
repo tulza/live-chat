@@ -1,12 +1,14 @@
 "use server";
 
-import { prisma } from "@/libs/db";
+import { prisma } from "@/libs/server/db";
 import {
     encodeBase32LowerCaseNoPadding,
     encodeHexLowerCase,
 } from "@oslojs/encoding";
 import { cookies } from "next/headers";
-import { Session, User } from "@prisma/client";
+import { Session } from "@prisma/client";
+import { cache } from "react";
+import { User } from "./user";
 // import type { User, Session } from "@prisma/client";
 
 export async function generateSessionToken(): Promise<string> {
@@ -102,6 +104,18 @@ export async function deleteSessionTokenCookie(): Promise<void> {
         path: "/",
     });
 }
+
+export const getCurrentSession = cache(
+    async (): Promise<SessionValidationResult> => {
+        const cookieStore = await cookies();
+        const token = cookieStore.get("session")?.value ?? null;
+        if (token === null) {
+            return { session: null, user: null };
+        }
+        const result = await validateSessionToken(token);
+        return result;
+    }
+);
 
 export type SessionValidationResult =
     | { session: Session; user: User }
