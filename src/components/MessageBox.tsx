@@ -1,8 +1,13 @@
 import { ChatContextType } from "@/context/ChatSocket";
 import React, { useRef } from "react";
 import Label from "./common/Label";
+import { User } from "@/libs/server/user";
 
-const MessageBox = ({ ...chatSocket }: ChatContextType) => {
+interface MessageBoxProps extends ChatContextType {
+    user: User | null;
+}
+
+const MessageBox = ({ user, ...chatSocket }: MessageBoxProps) => {
     const inputRef = useRef<HTMLInputElement>(null);
 
     return (
@@ -15,8 +20,12 @@ const MessageBox = ({ ...chatSocket }: ChatContextType) => {
                     if (!inputRef?.current) return;
 
                     const input = inputRef.current?.value || "";
+                    const name =
+                        user?.username ||
+                        `anon(${chatSocket.clientId.slice(0, 5)})`;
                     chatSocket.sendMessage({
-                        name: chatSocket.clientId,
+                        name: name,
+                        socketId: chatSocket.clientId,
                         message: input,
                         time: new Date().toLocaleTimeString(),
                     });

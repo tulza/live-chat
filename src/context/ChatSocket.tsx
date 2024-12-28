@@ -16,6 +16,7 @@ export type Message = {
     name: string;
     time: string;
     message: string;
+    socketId: string;
 };
 
 const ChatContext = createContext<ChatContextType>({} as ChatContextType);
@@ -44,7 +45,7 @@ const ChatSocket = ({ children }: { children: React.ReactNode }) => {
 
     const AddMessage = (message: Message) => {
         if (!message) return;
-        if (message.name === clientId) return;
+        if (message.socketId === clientId) return;
         setChat((prev) => [...prev, message]);
     };
 

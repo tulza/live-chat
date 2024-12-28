@@ -23,7 +23,7 @@ const ChatBox = ({ ...chatSocket }: ChatContextType) => {
                 </p>
                 {chatSocket?.chat?.map((message, index) => (
                     <p key={index}>
-                        {message.name.slice(0, 6)}: {message.message}
+                        {message.name}: {message.message}
                     </p>
                 ))}
             </BasicContainer>
