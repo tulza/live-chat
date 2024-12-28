@@ -1,8 +1,8 @@
 # syntax = docker/dockerfile:1
 
 # Adjust NODE_VERSION as desired
-ARG NODE_VERSION=20.18.1
-FROM node:${NODE_VERSION}-slim as base
+ARG NODE_VERSION=21
+FROM node:${NODE_VERSION} as base
 
 LABEL fly_launch_runtime="Next.js"
 
@@ -24,12 +24,17 @@ FROM base as build
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential node-gyp pkg-config python-is-python3
 
-# Install node modules
+RUN apt-get update -y && apt-get install -y openssl
+
+    # Install node modules
 COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile --prod=false
 
 # Copy application code
 COPY . .
+
+# Generate prisma
+RUN npx prisma generate
 
 # Build application
 RUN pnpm run build
