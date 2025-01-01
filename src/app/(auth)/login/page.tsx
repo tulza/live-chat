@@ -16,7 +16,7 @@ export default async function LoginPage() {
                 <div className="border-r border-primary h-full grow" />
                 <div className="w-[clamp(300px,60%,800px)]">
                     <div className="grid grid-cols-3">
-                        <Label className="col-span-2">Login Options</Label>
+                        <Label className="col-span-3">Login Options</Label>
                         {/* <Link href="/sign-up">
                             <Label variants={{ color: "secondary" }}>
                                 Sign up

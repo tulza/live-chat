@@ -1,24 +1,33 @@
-"use client";
-
 import React from "react";
-import { useChatSocket } from "../context/ChatSocket";
-import StatusBox from "./StatusBox";
-import ChatBox from "./ChatBox";
+import ClientStatus from "./Statuses/ClientStatus";
 import MessageBox from "./MessageBox";
-import AccountBox from "./AccountBox";
 import { User } from "@/libs/server/user";
+import { BasicContainer, Label } from "./common";
+import ServerStatus from "./Statuses/ServerStatus";
+import AccountStatus from "./Statuses/AccountStatus";
+import ChangeLogStatus from "./Statuses/ChangeLogStatus";
+import DirectMessageStatus from "./Statuses/DirectMessageStatus";
+import ChatBox from "./ChatBox";
 
 const ChatRoom = ({ user }: { user: User | null }) => {
-    const chatSocket = useChatSocket();
     return (
-        <>
-            <div className="grid grid-cols-2 gap-2 h-min">
-                <StatusBox {...chatSocket} />
-                <AccountBox {...chatSocket} user={user} />
+        <div className="flex w-[clamp(600px,100%,1440px)] px-8 h-full gap-4 ">
+            <div className="w-[400px] flex flex-col gap-4 ">
+                <Label>Status</Label>
+                <ClientStatus />
+                <ServerStatus />
+                <AccountStatus user={user} />
+                <DirectMessageStatus />
+                <ChangeLogStatus />
             </div>
-            <ChatBox {...chatSocket} />
-            <MessageBox {...chatSocket} user={user} />
-        </>
+            <div className="w-full flex flex-col gap-4">
+                <Label>Public chat room</Label>
+                <BasicContainer className="grow">
+                    <ChatBox />
+                </BasicContainer>
+                <MessageBox user={user} />
+            </div>
+        </div>
     );
 };
 

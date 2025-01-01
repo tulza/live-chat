@@ -9,7 +9,7 @@ const BasicContainer = forwardRef<
         <div
             {...props}
             className={cn(
-                "border p-2 border-primary overflow-hidden",
+                "border-2 p-1 px-2 border-gray overflow-hidden",
                 props.className
             )}
             ref={ref}

@@ -2,16 +2,19 @@ import { cn } from "@/libs/utils";
 import React, { HTMLAttributes } from "react";
 import { tv, VariantProps } from "tailwind-variants";
 
-const label = tv({
-    base: "p-1 w-full",
+export const label = tv({
+    base: "px-2 w-full border-2 border-black/20",
     variants: {
         color: {
-            primary: "bg-primary text-background",
-            secondary: "border-2 border-primary text-primary bg-none",
+            ghost: "border-gray",
+            green: "bg-green",
+            blue: "bg-blue",
+            red: "bg-red",
+            gray: "bg-gray",
         },
     },
     defaultVariants: {
-        color: "primary",
+        color: "ghost",
     },
 });
 

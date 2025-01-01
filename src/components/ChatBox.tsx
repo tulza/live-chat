@@ -1,8 +1,10 @@
-import { ChatContextType } from "@/context/ChatSocket";
-import React, { useEffect, useRef } from "react";
-import { BasicContainer, Label } from "./common";
+"use client";
 
-const ChatBox = ({ ...chatSocket }: ChatContextType) => {
+import { useChatSocket } from "@/context/ChatSocket";
+import React, { useEffect, useRef } from "react";
+
+const ChatBox = () => {
+    const chatSocket = useChatSocket();
     const chatBoxRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -13,20 +15,12 @@ const ChatBox = ({ ...chatSocket }: ChatContextType) => {
 
     return (
         <div className="flex-grow flex flex-col overflow-hidden">
-            <Label>Chat</Label>
-            <BasicContainer
-                className="h-full flex-col overflow-y-auto"
-                ref={chatBoxRef}
-            >
-                <p className="text-primary/50">
-                    here lies the beginning of the chat...
+            <p className="text-gray">here lies the beginning of the chat...</p>
+            {chatSocket?.chat?.map((message, index) => (
+                <p key={index}>
+                    {message.name}: {message.message}
                 </p>
-                {chatSocket?.chat?.map((message, index) => (
-                    <p key={index}>
-                        {message.name}: {message.message}
-                    </p>
-                ))}
-            </BasicContainer>
+            ))}
         </div>
     );
 };

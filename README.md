@@ -19,6 +19,8 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 This project uses [socket.io] to let server communicate to users and [luciaAuth] to implement authentication.
 
+### Process
+
 ## Deployment
 
 live website [here](https://live-chat-billowing-rain-2283.fly.dev/)

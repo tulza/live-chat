@@ -1,18 +1,19 @@
-import { ChatContextType } from "@/context/ChatSocket";
+"use client";
+
+import { useChatSocket } from "@/context/ChatSocket";
 import React, { useRef } from "react";
-import Label from "./common/Label";
 import { User } from "@/libs/server/user";
 
-interface MessageBoxProps extends ChatContextType {
+interface MessageBoxProps {
     user: User | null;
 }
 
-const MessageBox = ({ user, ...chatSocket }: MessageBoxProps) => {
+const MessageBox = ({ user }: MessageBoxProps) => {
+    const chatSocket = useChatSocket();
     const inputRef = useRef<HTMLInputElement>(null);
 
     return (
         <div>
-            <Label>Send a message</Label>
             <form
                 onSubmit={(e: React.FormEvent) => {
                     e.preventDefault();
@@ -32,14 +33,14 @@ const MessageBox = ({ user, ...chatSocket }: MessageBoxProps) => {
                     inputRef.current!.value = "";
                 }}
             >
-                <div className="border p-2 whitespace-pre border-primary flex">
+                <div className="border-2 px-2 p-1 whitespace-pre border-gray flex">
                     &gt;{" "}
                     <input
                         ref={inputRef}
                         required
                         autoFocus
                         type="text"
-                        className=" bg-transparent placeholder:text-primary/50 outline-none whitespace-nowrap w-full"
+                        className=" bg-transparent placeholder:text-gray outline-none whitespace-nowrap w-full"
                         placeholder="send your message by pressing enter..."
                     />
                 </div>
