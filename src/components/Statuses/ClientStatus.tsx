@@ -12,7 +12,9 @@ const ClientStatus = () => {
             <p>
                 Status: {chatSocket.isConnected ? "connected" : "disconnected"}
             </p>
-            <p>Client Id: {chatSocket.clientId}</p>
+            <p className=" w-[220px] whitespace-nowrap truncate">
+                ClientID: {chatSocket.clientId}
+            </p>
         </SectionBox>
     );
 };

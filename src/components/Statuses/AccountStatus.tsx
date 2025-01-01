@@ -10,7 +10,7 @@ interface AccountBoxProps {
 const AccountStatus = ({ user }: AccountBoxProps) => {
     return (
         <div className="flex flex-col gap-1">
-            <div className="w-full grid grid-cols-3">
+            <div className="w-full flex">
                 <Label variants={{ color: "red" }} className="col-span-2">
                     Account
                 </Label>

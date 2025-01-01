@@ -12,7 +12,7 @@ import ChatBox from "./ChatBox";
 const ChatRoom = ({ user }: { user: User | null }) => {
     return (
         <div className="flex w-[clamp(600px,100%,1440px)] px-8 h-full gap-4 ">
-            <div className="w-[400px] flex flex-col gap-4 ">
+            <div className="w-[250px] flex flex-col gap-4 ">
                 <Label>Status</Label>
                 <ClientStatus />
                 <ServerStatus />
@@ -20,11 +20,9 @@ const ChatRoom = ({ user }: { user: User | null }) => {
                 <DirectMessageStatus />
                 <ChangeLogStatus />
             </div>
-            <div className="w-full flex flex-col gap-4">
+            <div className="w-min grow flex flex-col gap-4">
                 <Label>Public chat room</Label>
-                <BasicContainer className="grow">
-                    <ChatBox />
-                </BasicContainer>
+                <ChatBox />
                 <MessageBox user={user} />
             </div>
         </div>

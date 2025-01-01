@@ -2,6 +2,7 @@
 
 import { useChatSocket } from "@/context/ChatSocket";
 import React, { useEffect, useRef } from "react";
+import { BasicContainer } from "./common";
 
 const ChatBox = () => {
     const chatSocket = useChatSocket();
@@ -14,14 +15,21 @@ const ChatBox = () => {
     }, [chatSocket.chat]);
 
     return (
-        <div className="flex-grow flex flex-col overflow-hidden">
-            <p className="text-gray">here lies the beginning of the chat...</p>
+        <BasicContainer
+            ref={chatBoxRef}
+            className="grow overflow-hidden overflow-y-scroll"
+        >
+            <p className="text-gray min-w-full">
+                here lies the beginning of the chat...
+            </p>
             {chatSocket?.chat?.map((message, index) => (
-                <p key={index}>
-                    {message.name}: {message.message}
-                </p>
+                <div className="flex break-all" key={index}>
+                    <p>
+                        {message.name}: {message.message}
+                    </p>
+                </div>
             ))}
-        </div>
+        </BasicContainer>
     );
 };
 

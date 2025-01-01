@@ -58,7 +58,6 @@ export async function validateSessionToken(
     if (!session) return { session: null, user: null };
     // check if session is expired
     if (Date.now() >= session.expiresAt.getTime()) {
-        await prisma.session.delete({ where: { id: sessionId } });
         return { session: null, user: null };
     }
     // renew session if 15 days left

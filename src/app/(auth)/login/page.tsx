@@ -3,37 +3,23 @@ import Link from "next/link";
 
 export default async function LoginPage() {
     return (
-        <>
+        <div className="flex flex-col h-full justify-center gap-4">
             <div className="grid grid-cols-4">
                 <Link href="/">
-                    <Label variants={{ color: "secondary" }}>
-                        Back to chat
-                    </Label>
+                    <Label variants={{ color: "ghost" }}>Back to chat</Label>
                 </Link>
-                <Label className="col-span-3">Login Page</Label>
+                <Label className="col-span-3" variants={{ color: "red" }}>
+                    Login Page
+                </Label>
             </div>
-            <BasicContainer className="grow p-0 flex justify-center items-center">
-                <div className="border-r border-primary h-full grow" />
-                <div className="w-[clamp(300px,60%,800px)]">
-                    <div className="grid grid-cols-3">
-                        <Label className="col-span-3">Login Options</Label>
-                        {/* <Link href="/sign-up">
-                            <Label variants={{ color: "secondary" }}>
-                                Sign up
-                            </Label>
-                        </Link> */}
-                    </div>
-                    <BasicContainer className="border-x-transparent p-0 w-full *:text-left flex flex-col gap-2">
-                        {/* <Link href="/login/google" className="p-1">
-                            Login with Google
-                        </Link> */}
-                        <Link href="/login/github" className="p-1">
-                            Login with Github
-                        </Link>
-                    </BasicContainer>
-                </div>
-                <div className="border-l border-primary h-full grow" />
+            <BasicContainer className="p-0 flex-col flex">
+                <Link href="/login/github" className="px-2 hover:bg-gray">
+                    Login with Github
+                </Link>
+                <Link href="/login/google" className="px-2 hover:bg-gray">
+                    Login with Google
+                </Link>
             </BasicContainer>
-        </>
+        </div>
     );
 }

@@ -25,7 +25,14 @@ interface LabelProps extends HTMLAttributes<HTMLParagraphElement> {
 
 const Label = ({ children, variants, ...props }: LabelProps) => {
     return (
-        <p {...props} className={cn(props.className, label({ ...variants }))}>
+        <p
+            {...props}
+            className={cn(
+                "whitespace-nowrap",
+                props.className,
+                label({ ...variants })
+            )}
+        >
             {children}
         </p>
     );
