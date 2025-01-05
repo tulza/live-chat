@@ -20,7 +20,10 @@ const ServerStatus = () => {
 
     return (
         <SectionBox label="Server" labelVariants={{ color: "blue" }}>
-            <p>users online: {userCount}</p>
+            <div className="w-full *:whitespace-nowrap *:truncate">
+                <p suppressHydrationWarning>ServerId: {socket.id}</p>
+                <p>users online: {userCount}</p>
+            </div>
         </SectionBox>
     );
 };

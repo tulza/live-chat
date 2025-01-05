@@ -3,18 +3,22 @@
 import { useChatSocket } from "@/context/ChatSocket";
 import React from "react";
 import SectionBox from "../common/SectionBox";
+import useTime from "@/hooks/useTime";
 
 const ClientStatus = () => {
     const chatSocket = useChatSocket();
+    const time = useTime();
 
     return (
         <SectionBox label="Client" labelVariants={{ color: "green" }}>
-            <p>
-                Status: {chatSocket.isConnected ? "connected" : "disconnected"}
-            </p>
-            <p className=" w-[220px] whitespace-nowrap truncate">
-                ClientID: {chatSocket.clientId}
-            </p>
+            <div className="w-full *:whitespace-nowrap *:truncate">
+                <p>
+                    Status:{" "}
+                    {chatSocket.isConnected ? "connected" : "disconnected"}
+                </p>
+                <p>ClientID: {chatSocket.clientId}</p>
+                <p suppressHydrationWarning>Time: {time.toLocaleString()}</p>
+            </div>
         </SectionBox>
     );
 };

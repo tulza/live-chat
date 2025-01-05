@@ -2,7 +2,7 @@ import React from "react";
 import ClientStatus from "./Statuses/ClientStatus";
 import MessageBox from "./MessageBox";
 import { User } from "@/libs/server/user";
-import { BasicContainer, Label } from "./common";
+import { Label } from "./common";
 import ServerStatus from "./Statuses/ServerStatus";
 import AccountStatus from "./Statuses/AccountStatus";
 import ChangeLogStatus from "./Statuses/ChangeLogStatus";

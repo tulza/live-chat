@@ -80,7 +80,7 @@ const ChatSocket = ({ children }: { children: React.ReactNode }) => {
             socket.off("connect", onConnect);
             socket.off("disconnect", onDisconnect);
         };
-    }, []);
+    }, [AddMessage]);
 
     return (
         <ChatContext.Provider
