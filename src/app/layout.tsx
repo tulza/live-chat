@@ -25,12 +25,8 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body
-                className={`${unifont.className} ${geistMono.variable} antialiased`}
-            >
-                <div className="p-4 text-primary gap-2 items-center h-dvh flex flex-col">
-                    {children}
-                </div>
+            <body className={`${unifont.className} ${geistMono.variable} antialiased`}>
+                <div className="p-4 text-primary gap-2 items-center h-dvh flex flex-col">{children}</div>
             </body>
         </html>
     );

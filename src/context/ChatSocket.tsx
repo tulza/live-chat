@@ -25,9 +25,7 @@ const ChatContext = createContext<ChatContextType>({} as ChatContextType);
 export const useChatSocket = () => {
     const context = useContext(ChatContext);
     if (!context) {
-        throw new Error(
-            "useChatSocket must be used within a ChatSocketProvider"
-        );
+        throw new Error("useChatSocket must be used within a ChatSocketProvider");
     }
     return context;
 };
@@ -49,7 +47,7 @@ const ChatSocket = ({ children }: { children: React.ReactNode }) => {
             if (!message || message.socketId === clientId) return;
             setChat((prev) => [...prev, message]);
         },
-        [clientId]
+        [clientId],
     );
 
     const onConnect = useCallback(() => {

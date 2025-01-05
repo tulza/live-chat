@@ -21,9 +21,7 @@ const MessageBox = ({ user }: MessageBoxProps) => {
                     if (!inputRef?.current) return;
 
                     const input = inputRef.current?.value || "";
-                    const name =
-                        user?.username ||
-                        `anon(${chatSocket.clientId.slice(0, 5)})`;
+                    const name = user?.username || `anon(${chatSocket.clientId.slice(0, 5)})`;
                     chatSocket.sendMessage({
                         name: name,
                         socketId: chatSocket.clientId,

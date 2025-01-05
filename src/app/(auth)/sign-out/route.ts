@@ -1,8 +1,4 @@
-import {
-    deleteSessionTokenCookie,
-    getCurrentSession,
-    invalidateSession,
-} from "@/libs/server/session";
+import { deleteSessionTokenCookie, getCurrentSession, invalidateSession } from "@/libs/server/session";
 
 export async function GET(): Promise<Response> {
     const session = await getCurrentSession();

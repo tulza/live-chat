@@ -58,11 +58,7 @@ const ChangelogDialog = () => {
                                 </ul>
                                 {log.image && (
                                     <div className="w-full relative mt-2 aspect-video">
-                                        <Image
-                                            fill
-                                            src={log.image.src}
-                                            alt={log.image.alt}
-                                        />
+                                        <Image fill src={log.image.src} alt={log.image.alt} />
                                     </div>
                                 )}
                                 <hr className="border-gray my-2" />

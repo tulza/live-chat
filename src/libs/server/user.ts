@@ -1,9 +1,6 @@
 import { prisma } from "./db";
 
-export async function createUserWithGithub(
-    githubId: number,
-    username: string
-): Promise<User> {
+export async function createUserWithGithub(githubId: number, username: string): Promise<User> {
     const user = await prisma.user.create({
         data: { githubId, username },
     });
@@ -14,9 +11,7 @@ export async function createUserWithGithub(
     return user;
 }
 
-export async function getUserFromGitHubId(
-    githubId: number
-): Promise<User | null> {
+export async function getUserFromGitHubId(githubId: number): Promise<User | null> {
     const user = await prisma.user.findUnique({
         where: { githubId: githubId },
     });

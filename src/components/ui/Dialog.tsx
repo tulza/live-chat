@@ -28,11 +28,7 @@ export const Dialog = ({ children }: { children: React.ReactNode }) => {
         setIsOpen(false);
     };
 
-    return (
-        <DialogContext.Provider value={{ isOpen, handleOpen, handleClose }}>
-            {children}
-        </DialogContext.Provider>
-    );
+    return <DialogContext.Provider value={{ isOpen, handleOpen, handleClose }}>{children}</DialogContext.Provider>;
 };
 
 interface DialogTriggerProps extends HTMLAttributes<HTMLButtonElement> {
