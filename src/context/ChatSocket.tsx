@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { socket } from "../socket";
 import React, { createContext, useContext } from "react";
+import SOCKET from "@/shared/socketEnum";
 
 export type ChatContextType = {
     isConnected: boolean;
@@ -35,22 +36,23 @@ const ChatSocket = ({ children }: { children: React.ReactNode }) => {
     const [isConnected, setIsConnected] = useState(false);
     const [transport, setTransport] = useState("N/A");
     const [clientId, setServerId] = useState("N/A");
-
     const [chat, setChat] = useState<Message[]>([]);
 
     const sendMessage = (message: Message) => {
-        socket.emit("message", message);
-        AddMessage(message);
-    };
-
-    const AddMessage = (message: Message) => {
-        if (!message) return;
-        if (message.socketId === clientId) return;
         setChat((prev) => [...prev, message]);
+        AddMessage(message);
+        socket.emit(SOCKET.MESSAGE, message);
     };
 
-    // socket connection
-    const onConnect = () => {
+    const AddMessage = useCallback(
+        (message: Message) => {
+            if (!message || message.socketId === clientId) return;
+            setChat((prev) => [...prev, message]);
+        },
+        [clientId]
+    );
+
+    const onConnect = useCallback(() => {
         setIsConnected(true);
         setServerId(socket.io.engine.id);
         setTransport(socket.io.engine.transport.name);
@@ -58,36 +60,39 @@ const ChatSocket = ({ children }: { children: React.ReactNode }) => {
         socket.io.engine.on("upgrade", (transport) => {
             setTransport(transport.name);
         });
-    };
+    }, []);
 
-    function onDisconnect() {
+    const onDisconnect = useCallback(() => {
         setIsConnected(false);
         setTransport("N/A");
-    }
+    }, []);
 
     useEffect(() => {
         if (socket.connected) {
             onConnect();
         }
 
-        socket.on("connect", onConnect);
-        socket.on("disconnect", onDisconnect);
-        socket.on("message", (message) => {
+        const handleMessage = (message: Message) => {
             AddMessage(message);
-        });
+        };
+
+        socket.on(SOCKET.CONNECT, onConnect);
+        socket.on(SOCKET.DISCONNECT, onDisconnect);
+        socket.on(SOCKET.MESSAGE, handleMessage);
 
         return () => {
-            socket.off("connect", onConnect);
-            socket.off("disconnect", onDisconnect);
+            socket.off(SOCKET.CONNECT, onConnect);
+            socket.off(SOCKET.DISCONNECT, onDisconnect);
+            socket.off(SOCKET.MESSAGE, handleMessage);
         };
-    }, [AddMessage]);
+    }, [AddMessage, onConnect, onDisconnect]);
 
     return (
         <ChatContext.Provider
             value={{
                 isConnected,
                 transport,
-                clientId: clientId,
+                clientId,
                 chat,
                 sendMessage,
             }}
