@@ -1,14 +1,18 @@
 import { createServer } from "node:http";
 import next from "next";
 import { Server } from "socket.io";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const dev = process.env.NODE_ENV !== "production";
+const discord_webhook = process.env.DISCORD_WEBHOOK;
+
 const hostname = "localhost";
 const port = 3000;
 
 let onlineUsers = 0;
-
-// when using middleware `hostname` and `port` must be provided below
+let userList = {};
 
 const app = next({ dev, hostname, port });
 const handler = app.getRequestHandler();
@@ -20,18 +24,40 @@ app.prepare().then(() => {
 
     io.on("connection", (socket) => {
         console.log("a user has connected");
+        userList[socket.client.id] = io.id;
         onlineUsers += 1;
+
+        console.log(userList);
         console.log(onlineUsers);
 
         io.emit("numberOfUsers", onlineUsers);
 
         socket.on("disconnect", () => {
             onlineUsers -= 1;
-            console.log("a user has disconnected");
+            delete userList[socket.client.id];
+
+            console.log(`a user(${socket.client.id}) has disconnected`);
         });
 
         socket.on("message", (message) => {
             // console.log(message);
+
+            fetch(discord_webhook, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    content: message.message,
+                    username: message.name,
+                }),
+            }).then((response) => {
+                if (response.ok) console.log("Message sent successfully!");
+                else
+                    console.error(
+                        "Failed to send message:",
+                        response.statusText
+                    );
+            });
+
             io.emit("message", message);
         });
     });
