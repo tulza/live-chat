@@ -35,3 +35,73 @@ body {
     color: hsl(var(--foreground));
     background: var(--background);
 }
+
+.hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.tiny-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #888 #0000;
+}
+
+/* width */
+.tiny-scrollbar::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: none;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #0000;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.rainbow {
+    color: #ff6969;
+    display: inline-block;
+    animation: 4s linear 0s anim-rainbow infinite;
+}
+
+@keyframes anim-rainbow {
+    0% {
+        filter: hue-rotate(0deg);
+    }
+    50% {
+        filter: hue-rotate(360deg);
+    }
+    100% {
+        filter: hue-rotate(720deg);
+    }
+}
+
+@keyframes mymove {
+    0% {
+        top: 0px;
+    }
+    25% {
+        top: 200px;
+    }
+    50% {
+        top: 100px;
+    }
+    75% {
+        top: 200px;
+    }
+    100% {
+        top: 0px;
+    }
+}
