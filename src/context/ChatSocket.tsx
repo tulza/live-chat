@@ -6,6 +6,7 @@ import React, { createContext, useContext } from "react";
 import SOCKET from "@/shared/socketEnum";
 import DBfetchMessage from "@/actions/fetchMessage";
 import DBsendMessage from "@/actions/sendMessage.ts";
+import { Filter } from "bad-words";
 
 export type ChatContextType = {
     isConnected: boolean;
@@ -23,6 +24,7 @@ export type Message = {
 };
 
 const ChatContext = createContext<ChatContextType>({} as ChatContextType);
+const filter = new Filter();
 
 export const useChatSocket = () => {
     const context = useContext(ChatContext);
@@ -39,6 +41,8 @@ const ChatSocket = ({ children }: { children: React.ReactNode }) => {
     const [chat, setChat] = useState<Message[]>([]);
 
     const sendMessage = (message: Message) => {
+        message.message = filter.clean(message.message);
+
         setChat((prev) => [...prev, message]);
         DBsendMessage(message);
         AddMessage(message);
