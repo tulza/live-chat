@@ -11,6 +11,15 @@ type ChangeLog = {
 
 export const changelogData: ChangeLog[] = [
     {
+        version: "0.1.4-b",
+        changes: [
+            <p key="0.1.4-b-1" className="rainbow">
+                Added chatlogs :D
+            </p>,
+            "profanity filter for the naughty",
+        ],
+    },
+    {
         version: "0.1.3-b",
         changes: ["Display number of users online", "Minor ui fixes"],
     },
