@@ -4,6 +4,8 @@ import { useCallback, useEffect, useState } from "react";
 import { socket } from "../socket";
 import React, { createContext, useContext } from "react";
 import SOCKET from "@/shared/socketEnum";
+import DBfetchMessage from "@/actions/fetchMessage";
+import DBsendMessage from "@/actions/sendMessage.ts";
 
 export type ChatContextType = {
     isConnected: boolean;
@@ -17,7 +19,7 @@ export type Message = {
     name: string;
     time: string;
     message: string;
-    socketId: string;
+    socketId?: string;
 };
 
 const ChatContext = createContext<ChatContextType>({} as ChatContextType);
@@ -38,6 +40,7 @@ const ChatSocket = ({ children }: { children: React.ReactNode }) => {
 
     const sendMessage = (message: Message) => {
         setChat((prev) => [...prev, message]);
+        DBsendMessage(message);
         AddMessage(message);
         socket.emit(SOCKET.MESSAGE, message);
     };
@@ -47,13 +50,16 @@ const ChatSocket = ({ children }: { children: React.ReactNode }) => {
             if (!message || message.socketId === clientId) return;
             setChat((prev) => [...prev, message]);
         },
-        [clientId],
+        [clientId]
     );
 
-    const onConnect = useCallback(() => {
+    const onConnect = useCallback(async () => {
         setIsConnected(true);
         setServerId(socket.io.engine.id);
         setTransport(socket.io.engine.transport.name);
+
+        const messages = await DBfetchMessage();
+        setChat(messages);
 
         socket.io.engine.on("upgrade", (transport) => {
             setTransport(transport.name);

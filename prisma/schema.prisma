@@ -5,7 +5,7 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "debian-openssl-1.1.x", "debian-openssl-3.0.x"]
 }
 
@@ -15,12 +15,13 @@ datasource db {
 }
 
 model User {
-  id       Int       @id @default(autoincrement())
-  githubId Int?   @unique 
-  googleId Int?   @unique
-  username String
-  createdAt DateTime @default(now())
-  sessions Session[]
+  id        Int       @id @default(autoincrement())
+  githubId  Int?      @unique
+  googleId  Int?      @unique
+  username  String
+  createdAt DateTime  @default(now())
+  sessions  Session[]
+  Message   Message[]
 }
 
 model Session {
@@ -28,5 +29,15 @@ model Session {
   userId    Int
   expiresAt DateTime
 
-  user      User     @relation(references: [id], fields: [userId], onDelete: Cascade)
+  user User @relation(references: [id], fields: [userId], onDelete: Cascade)
+}
+
+model Message {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+
+  authorId Int?
+  author   User?  @relation(fields: [authorId], references: [id])
+  username String
+  message  String
 }
