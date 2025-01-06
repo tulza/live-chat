@@ -11,18 +11,11 @@ interface SectionBoxProps {
     fill?: boolean;
 }
 
-const SectionBox = ({
-    label,
-    fill,
-    children,
-    labelVariants,
-}: SectionBoxProps) => {
+const SectionBox = ({ label, fill, children, labelVariants }: SectionBoxProps) => {
     return (
         <div className={cn("flex flex-col gap-1", fill && "grow")}>
             <Label variants={labelVariants}>{label}</Label>
-            <BasicContainer className={cn(fill && "grow")}>
-                {children}
-            </BasicContainer>
+            <BasicContainer className={cn(fill && "grow")}>{children}</BasicContainer>
         </div>
     );
 };

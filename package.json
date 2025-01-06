@@ -14,6 +14,7 @@
         "@oslojs/encoding": "^1.1.0",
         "@prisma/client": "6.1.0",
         "arctic": "^2.3.3",
+        "bad-words": "^4.0.0",
         "clsx": "^2.1.1",
         "dotenv": "^16.4.7",
         "motion": "^11.15.0",

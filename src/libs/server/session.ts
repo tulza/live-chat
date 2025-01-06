@@ -1,10 +1,7 @@
 "use server";
 
 import { prisma } from "@/libs/server/db";
-import {
-    encodeBase32LowerCaseNoPadding,
-    encodeHexLowerCase,
-} from "@oslojs/encoding";
+import { encodeBase32LowerCaseNoPadding, encodeHexLowerCase } from "@oslojs/encoding";
 import { cookies } from "next/headers";
 import { Session } from "@prisma/client";
 import { cache } from "react";
@@ -23,10 +20,7 @@ export async function generateSessionToken(): Promise<string> {
     return token;
 }
 
-export async function createSession(
-    token: string,
-    userId: number
-): Promise<Session> {
+export async function createSession(token: string, userId: number): Promise<Session> {
     const sessionId = encodeHexLowerCase(new TextEncoder().encode(token));
     // session expires in 30 days
     const session: Session = {
@@ -39,9 +33,7 @@ export async function createSession(
     return session;
 }
 
-export async function validateSessionToken(
-    token: string
-): Promise<SessionValidationResult> {
+export async function validateSessionToken(token: string): Promise<SessionValidationResult> {
     const sessionId = encodeHexLowerCase(new TextEncoder().encode(token));
     const result = await prisma.session.findUnique({
         // ^?
@@ -79,10 +71,7 @@ export async function invalidateSession(sessionId: string): Promise<void> {
     await prisma.session.delete({ where: { id: sessionId } });
 }
 
-export async function setSessionTokenCookie(
-    token: string,
-    expiresAt: Date
-): Promise<void> {
+export async function setSessionTokenCookie(token: string, expiresAt: Date): Promise<void> {
     const cookieStore = await cookies();
     cookieStore.set("session", token, {
         httpOnly: true,
@@ -104,18 +93,14 @@ export async function deleteSessionTokenCookie(): Promise<void> {
     });
 }
 
-export const getCurrentSession = cache(
-    async (): Promise<SessionValidationResult> => {
-        const cookieStore = await cookies();
-        const token = cookieStore.get("session")?.value ?? null;
-        if (token === null) {
-            return { session: null, user: null };
-        }
-        const result = await validateSessionToken(token);
-        return result;
+export const getCurrentSession = cache(async (): Promise<SessionValidationResult> => {
+    const cookieStore = await cookies();
+    const token = cookieStore.get("session")?.value ?? null;
+    if (token === null) {
+        return { session: null, user: null };
     }
-);
+    const result = await validateSessionToken(token);
+    return result;
+});
 
-export type SessionValidationResult =
-    | { session: Session; user: User }
-    | { session: null; user: null };
+export type SessionValidationResult = { session: Session; user: User } | { session: null; user: null };

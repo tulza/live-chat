@@ -4,6 +4,9 @@ import { useCallback, useEffect, useState } from "react";
 import { socket } from "../socket";
 import React, { createContext, useContext } from "react";
 import SOCKET from "@/shared/socketEnum";
+import DBfetchMessage from "@/actions/fetchMessage";
+import DBsendMessage from "@/actions/sendMessage.ts";
+import { Filter } from "bad-words";
 
 export type ChatContextType = {
     isConnected: boolean;
@@ -17,17 +20,16 @@ export type Message = {
     name: string;
     time: string;
     message: string;
-    socketId: string;
+    socketId?: string;
 };
 
 const ChatContext = createContext<ChatContextType>({} as ChatContextType);
+const filter = new Filter();
 
 export const useChatSocket = () => {
     const context = useContext(ChatContext);
     if (!context) {
-        throw new Error(
-            "useChatSocket must be used within a ChatSocketProvider"
-        );
+        throw new Error("useChatSocket must be used within a ChatSocketProvider");
     }
     return context;
 };
@@ -39,7 +41,10 @@ const ChatSocket = ({ children }: { children: React.ReactNode }) => {
     const [chat, setChat] = useState<Message[]>([]);
 
     const sendMessage = (message: Message) => {
+        message.message = filter.clean(message.message);
+
         setChat((prev) => [...prev, message]);
+        DBsendMessage(message);
         AddMessage(message);
         socket.emit(SOCKET.MESSAGE, message);
     };
@@ -52,10 +57,13 @@ const ChatSocket = ({ children }: { children: React.ReactNode }) => {
         [clientId]
     );
 
-    const onConnect = useCallback(() => {
+    const onConnect = useCallback(async () => {
         setIsConnected(true);
         setServerId(socket.io.engine.id);
         setTransport(socket.io.engine.transport.name);
+
+        const messages = await DBfetchMessage();
+        setChat(messages);
 
         socket.io.engine.on("upgrade", (transport) => {
             setTransport(transport.name);

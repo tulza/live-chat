@@ -20,9 +20,7 @@ const ChangeLogStatus = async () => {
             </ul>
             <Dialog>
                 <DialogTrigger className="w-full my-1 mt-2">
-                    <Label variants={{ color: "gray" }}>
-                        See full changelog
-                    </Label>
+                    <Label variants={{ color: "gray" }}>See full changelog</Label>
                 </DialogTrigger>
                 <ChangelogDialog />
             </Dialog>

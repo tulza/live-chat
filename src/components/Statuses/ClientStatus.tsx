@@ -12,10 +12,7 @@ const ClientStatus = () => {
     return (
         <SectionBox label="Client" labelVariants={{ color: "green" }}>
             <div className="w-full *:whitespace-nowrap *:truncate">
-                <p>
-                    Status:{" "}
-                    {chatSocket.isConnected ? "connected" : "disconnected"}
-                </p>
+                <p>Status: {chatSocket.isConnected ? "connected" : "disconnected"}</p>
                 <p>ClientID: {chatSocket.clientId}</p>
                 <p suppressHydrationWarning>Time: {time.toLocaleString()}</p>
             </div>

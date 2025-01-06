@@ -1,8 +1,4 @@
-import {
-    generateSessionToken,
-    createSession,
-    setSessionTokenCookie,
-} from "@/libs/server/session";
+import { generateSessionToken, createSession, setSessionTokenCookie } from "@/libs/server/session";
 import { cookies } from "next/headers";
 
 import type { OAuth2Tokens } from "arctic";

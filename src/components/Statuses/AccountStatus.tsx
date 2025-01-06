@@ -24,9 +24,7 @@ const AccountStatus = ({ user }: AccountBoxProps) => {
                     </Link>
                 )}
             </div>
-            <BasicContainer className="grow">
-                {user ? "Logged in as " + user.username : "Not logged in"}
-            </BasicContainer>
+            <BasicContainer className="grow">{user ? "Logged in as " + user.username : "Not logged in"}</BasicContainer>
         </div>
     );
 };
